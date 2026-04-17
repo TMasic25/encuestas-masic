@@ -338,7 +338,83 @@
       </div>
     </div>
   </div>
+<!-- Panel explicativo NPS -->
+  <div id="nps-info" style="
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-top: 20px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    border-left: 4px solid #2196B8;
+  ">
+    <div style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; gap:12px" onclick="toggleNPS()">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:18px">📊</span>
+        <span style="font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:#3D3D3D">¿Qué es el NPS?</span>
+        <span style="font-size:12px; color:#7A7A7A; font-weight:400">Net Promoter Score — métrica de lealtad de clientes</span>
+      </div>
+      <span id="nps-chevron" style="font-size:18px; color:#7A7A7A; transition:transform 0.3s; flex-shrink:0">▼</span>
+    </div>
 
+    <div id="nps-body" style="display:none; margin-top:18px;">
+
+      <div style="background:#F5F7FA; border-radius:10px; padding:14px 16px; margin-bottom:16px; font-size:13px; color:#7A7A7A; line-height:1.6">
+        Se basa en una sola pregunta: <strong style="color:#3D3D3D">"¿Qué tan probable es que recomiendes este servicio a alguien?"</strong> — escala 0 a 10.
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:16px;">
+        <div style="background:#FFF0F0; border-radius:12px; padding:14px 16px; text-align:center;">
+          <div style="font-size:24px; margin-bottom:4px;">😞</div>
+          <div style="font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:#C0392B;">Detractores</div>
+          <div style="font-size:22px; font-family:'Syne',sans-serif; font-weight:800; color:#C0392B; margin:4px 0;">0 – 6</div>
+          <div style="font-size:11px; color:#888; line-height:1.5">Insatisfechos.<br>Pueden hablar mal del servicio.</div>
+        </div>
+        <div style="background:#FFF8EC; border-radius:12px; padding:14px 16px; text-align:center;">
+          <div style="font-size:24px; margin-bottom:4px;">😐</div>
+          <div style="font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:#E67E22;">Pasivos</div>
+          <div style="font-size:22px; font-family:'Syne',sans-serif; font-weight:800; color:#E67E22; margin:4px 0;">7 – 8</div>
+          <div style="font-size:11px; color:#888; line-height:1.5">Conformes pero<br>indiferentes.</div>
+        </div>
+        <div style="background:#EDFAF5; border-radius:12px; padding:14px 16px; text-align:center;">
+          <div style="font-size:24px; margin-bottom:4px;">😄</div>
+          <div style="font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:#2DBD8F;">Promotores</div>
+          <div style="font-size:22px; font-family:'Syne',sans-serif; font-weight:800; color:#2DBD8F; margin:4px 0;">9 – 10</div>
+          <div style="font-size:11px; color:#888; line-height:1.5">Muy satisfechos.<br>Recomiendan el servicio.</div>
+        </div>
+      </div>
+
+      <div style="background:#F5F7FA; border-radius:10px; padding:14px 18px; margin-bottom:16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <span style="font-size:13px; color:#7A7A7A;">Fórmula:</span>
+        <span style="font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:#3D3D3D;">NPS = % Promotores − % Detractores</span>
+        <span style="font-size:12px; color:#7A7A7A;">Resultado entre −100 y +100</span>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:8px;">
+        <div style="display:flex; align-items:center; gap:10px; background:#FFF0F0; border-radius:10px; padding:10px 14px;">
+          <span style="font-size:16px;">🔴</span>
+          <div>
+            <div style="font-family:'Syne',sans-serif; font-size:12px; font-weight:700; color:#C0392B;">Negativo</div>
+            <div style="font-size:11px; color:#888;">Más detractores que promotores</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; background:#FFF8EC; border-radius:10px; padding:10px 14px;">
+          <span style="font-size:16px;">🟡</span>
+          <div>
+            <div style="font-family:'Syne',sans-serif; font-size:12px; font-weight:700; color:#E67E22;">0 – 50</div>
+            <div style="font-size:11px; color:#888;">Bueno, hay margen de mejora</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; background:#EDFAF5; border-radius:10px; padding:10px 14px;">
+          <span style="font-size:16px;">🟢</span>
+          <div>
+            <div style="font-family:'Syne',sans-serif; font-size:12px; font-weight:700; color:#2DBD8F;">50+</div>
+            <div style="font-size:11px; color:#888;">Excelente — clientes muy leales</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </main>
 
 <script>
@@ -717,6 +793,13 @@
   // Auto-cargar si ya autenticado
   if (sessionStorage.getItem('dash_auth') === '1') {
     setTimeout(cargarDatos, 100);
+  }
+  function toggleNPS() {
+    const body = document.getElementById('nps-body');
+    const chevron = document.getElementById('nps-chevron');
+    const visible = body.style.display !== 'none';
+    body.style.display = visible ? 'none' : 'block';
+    chevron.style.transform = visible ? 'rotate(0deg)' : 'rotate(180deg)';
   }
 </script>
 
